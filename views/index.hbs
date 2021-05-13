@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>User: </h2>
+            <br>
+            <h3><strong>Available Balance: </strong></h3>
+            <h3><strong>Total Balance: </strong></h3>
+            <button type="GET" class="btn btn-primary btn-block">Update Total</button>
+            <br>
+            <div class="form-group">
+                <input type="text" name="stock" class="form-control" placeholder="Stock" required="required">
+            </div>
+            <div class="form-group">
+                <a href="/main/">
+                <button type="PUT" class="btn btn-primary btn-block">Get Price</button>
+                </a>
+            </div>
+            <br>
+            <h3>Buy/Sell Stock</h3>
+            <form action="/main" method="POST">
+                <div class="form-group">
+                    <label for="name">Stock Name</label>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Stock Name">
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="text" name="quantity" class="form-control" id="quantity" placeholder="Stock Quantity">
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <button type="submit" class=" btn btn-primary tx-tfm">Buy</button>
+                    </div>
+                    <div class="row">
+                        <button type="submit" class=" btn btn-primary tx-tfm">Sell</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <h2>Purchase History: </h2>
+            {{#each }}
+        </div>
+        <div class="col">
+            <h2>Sales History: </h2>
+            {{#each}}
+        </div>
+    </div>
+</div>

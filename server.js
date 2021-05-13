@@ -38,3 +38,46 @@ const data_module = require("./data-module");
 
 const bodyParser = require("body-parser"); 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const exphbs = require('express-handlebars');
+const { decodeBase64 } = require("bcryptjs");
+
+app.engine('.hbs', exphbs({ 
+    extname: '.hbs',
+    defaultLayout: 'main'
+}));
+
+app.set('view engine', '.hbs');
+app.use(express.static(path.join(__dirname, 'public')));
+
+mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+
+// log when the DB is connected
+mongoose.connection.on("open", () => {
+  console.log("Database connection open.");
+});
+
+app.use(clientSessions({
+    cookieName: "session", // this is the object name that will be added to 'req'
+    secret: "Speer_assessment",
+    duration:  3 * 60 * 1000, // duration of the session in milliseconds (3 minutes)
+    activeDuration: 1000 * 60 // the session will be extended by this many ms each request (1 minute)
+  }));
+
+
+
+function ensureUser(req, res, next) {
+if (!req.session.user) {
+    res.redirect("/login");
+} else {
+    next();
+    }
+}
+
+data_module.connect().then(()=>{
+app.listen(HTTP_PORT, ()=>{console.log("API listening on: " + HTTP_PORT)});
+})
+.catch((err)=>{
+    console.log("unable to start the server: ", err.message);
+    process.exit();
+});
